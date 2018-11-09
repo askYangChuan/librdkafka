@@ -1,6 +1,6 @@
 EXAMPLES ?= rdkafka_example rdkafka_performance rdkafka_example_cpp \
 	rdkafka_consumer_example rdkafka_consumer_example_cpp \
-	kafkatest_verifiable_client rdkafka_simple_producer
+	kafkatest_verifiable_client rdkafka_simple_producer rdkafka_consumer_example_myself
 
 all: $(EXAMPLES)
 
@@ -34,6 +34,17 @@ rdkafka_simple_producer: ../src/librdkafka.a rdkafka_simple_producer.c
 
 rdkafka_consumer_example: ../src/librdkafka.a rdkafka_consumer_example.c
 	$(CC) $(CPPFLAGS) $(CFLAGS) rdkafka_consumer_example.c -o $@ $(LDFLAGS) \
+		../src/librdkafka.a $(LIBS)
+	@echo "# $@ is ready"
+	@echo "#"
+	@echo "./$@ <topic[:part]> <topic2[:part]> .."
+	@echo ""
+	@echo "#"
+	@echo "# More usage options:"
+	@echo "./$@ -h"
+
+rdkafka_consumer_example_myself: ../src/librdkafka.a rdkafka_consumer_example_myself.c
+	$(CC) $(CPPFLAGS) $(CFLAGS) rdkafka_consumer_example_myself.c -o $@ $(LDFLAGS) \
 		../src/librdkafka.a $(LIBS)
 	@echo "# $@ is ready"
 	@echo "#"
